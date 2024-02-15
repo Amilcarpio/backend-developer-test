@@ -13,20 +13,6 @@ export default function(sequelize) {
   }
   Job.init(
     {
-      id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey: true,
-        allowNull: false
-      },
-      companyId: {
-        type: DataTypes.UUID,
-        allowNull: false,
-        references: {
-          model: 'Companies',
-          key: 'id'
-        }
-      },
       title: {
         type: DataTypes.TEXT,
         allowNull: false
@@ -47,16 +33,6 @@ export default function(sequelize) {
         allowNull: false,
         defaultValue: 'draft'
       },
-      createdAt: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-        allowNull: false
-      },
-      updatedAt: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-        allowNull: false
-      }
     },
     {
       sequelize,
