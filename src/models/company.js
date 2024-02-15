@@ -12,27 +12,11 @@ export default function(sequelize) {
 
   Company.init(
     {
-      id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey: true,
-        allowNull: false
-      },
       name: {
         type: DataTypes.TEXT,
         allowNull: false,
         unique: true
       },
-      createdAt: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-        allowNull: false
-      },
-      updatedAt: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-        allowNull: false
-      }
     },
     {
       sequelize,
