@@ -1,38 +1,34 @@
-'use strict'
-
-import Sequelize from 'sequelize'
-import fs from 'fs'
+import Sequelize from 'sequelize';
+import { fileURLToPath } from 'url';
 import path from 'path';
-import config from '../config/config.json'
+import fs from 'fs';
 
-const configSequelize = `${__dirname}++${config[env].database}`
-const db = {}
-const env = process.env.NODE_ENV || 'development'
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-let sequelize;
-if (configSequelize.use_env_variable) {
-  sequelize = new Sequelize(process.env[configSequelize.use_env_variable], configSequelize);
-} else {
-  sequelize = new Sequelize(configSequelize.database, configSequelize.username, configSequelize.password, configSequelize);
-}
+const configPath = path.resolve(__dirname, './config/config.json');
+const configFile = fs.readFileSync(configPath, 'utf-8');
+const config = JSON.parse(configFile);
 
-fs
-  .readdirSync(__dirname)
-  .filter(file => {
-    return (file.indexOf('.') !== 0) && (file !== path.basename(__filename)) && (file.slice(-3) === '.js'); // Corrigindo uso de basename
-  })
-  .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-    db[model.name] = model;
-  });
+const { username, password, database, host, dialect } = config.development;
 
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
+const sequelize = new Sequelize(database, username, password, {
+  host,
+  dialect
 });
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+import CompanyModel from './company.js';
+import JobModel from './job.js';
 
-export default db
+const Company = CompanyModel(sequelize);
+const Job = JobModel(sequelize);
+
+function associateModels() {
+  const models = { Company, Job };
+  Object.values(models)
+    .filter(model => typeof model.associate === 'function')
+    .forEach(model => model.associate(models));
+}
+
+associateModels();
+
+export { sequelize, Company, Job };
