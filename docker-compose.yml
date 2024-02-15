@@ -1,0 +1,21 @@
+version: '3'
+services:
+  api:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - postgres_srv
+
+  postgres_srv:
+    image: postgres
+    ports:
+      - '5433:5432'
+    environment:
+      POSTGRES_DB: jobs-list
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: dev123
