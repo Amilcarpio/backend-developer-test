@@ -16,6 +16,22 @@ async function syncDatabase() {
     }
 }
 
+router.post('/job', async (req, res) => {
+    try {
+        const jobDAO = {
+            title: req.body.title,
+            description: req.body.description,
+            location: req.body.location,
+            notes: req.body.notes,
+            status: req.body.status
+        }
+        const result = await sequelize.models.Jobs.save(jobDAO)
+        res.status(201).send(result)
+    } catch (error) {
+        res.status(500).send(error)
+        console.log('error' + error)
+    }
+})
 syncDatabase()
 
 export default router
