@@ -18,5 +18,9 @@
     "pg": "^8.11.3",
     "sequelize": "^6.37.0",
     "serveless": "^0.0.2"
+  },
+  "devDependencies": {
+    "chai": "^5.1.0",
+    "mocha": "^10.3.0"
   }
 }
