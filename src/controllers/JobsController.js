@@ -1,16 +1,17 @@
-import model from '../models/job.js'
+import { Job } from '../models/index.js'
 import sequelize from 'sequelize'
 const { Op } = sequelize.Op
 
 class Jobs {
     async save(DAO) {
       try {
-        const item = await model.sequelize.models.Jobs.create({
+        const item = await Job.create({
           title: DAO.title,
           description: DAO.description,
           location: DAO.location,
           notes: DAO.notes,
-          status: DAO.status
+          status: DAO.status,
+          companyId: DAO.companyId
         })
 
         return item
@@ -25,7 +26,7 @@ class Jobs {
       let where = {}
       where.jobId = id
 
-      const data = await model.sequelize.models.Jobs.findOne({
+      const data = await Job.findOne({
         attributes: ['title', 'description', 'location', 'notes', 'status'],
         where: where,
         limit: 1,
@@ -65,7 +66,7 @@ class Jobs {
 
       const fields = ['title', 'description', 'location', 'notes', 'status']
 
-      const data = await model.sequelize.models.Jobs.findAll({
+      const data = await Job.findAll({
         attributes: fields,
         include: [
           { model: model.Company, as: 'company', attributes: ['id','name', 'createdAt'] }
@@ -86,7 +87,7 @@ class Jobs {
     try {
       let where = {}
       where.jobId = id
-      const result = await model.sequelize.models.Jobs.update(data, {
+      const result = await Job.update(data, {
         where: where
       })
       return result
@@ -96,11 +97,50 @@ class Jobs {
     }
   }
 
+  async publish(id) {
+    try {
+      let where = {}
+      where.id = id
+
+      const data = {
+        status: 'published'
+      }
+      const result = await Job.update(data, {
+        where: where
+      })
+      return result
+    } catch (error) {
+      console.log('error' + error)
+      throw new Error(error)
+    }
+  }
+
+  async archive(id) {
+    try {
+      let where = {}
+      where.id = id
+
+      const data = {
+        status: 'archived'
+      }
+      
+      const result = await Job.update(data, {
+        where: where
+      })
+
+      return result
+
+    } catch (error) {
+      console.log('error' + error)
+      throw new Error(error)
+    }
+  }
+
   async delete(id) {
     try {
       let where = {}
-      where.jobId = id
-      const result = await model.sequelize.models.Jobs.destroy({
+      where.id = id
+      const result = Job.destroy({
         where: where
       })
       return result
