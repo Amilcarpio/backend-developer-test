@@ -10,7 +10,7 @@ export default function(sequelize) {
     }
   }
 
-  Company.init(
+    Company.init(
     {
       name: {
         type: DataTypes.TEXT,
