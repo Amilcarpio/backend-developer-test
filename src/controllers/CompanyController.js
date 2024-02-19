@@ -1,5 +1,5 @@
-import { Company } from '../models/index.js'
-import { Job } from '../models/index.js'
+import { Company } from '../models/sequelizeConfig.js'
+import { Job } from '../models/sequelizeConfig.js'
 class Companies {
     async save(DAO) {
       try {
@@ -22,13 +22,13 @@ class Companies {
       where.id = id
 
       const data = await Company.findOne({
-        attributes: ['id','name'],
+        attributes: ['name'],
         where: where,
         limit: 1,
         offset: 0
       })
 
-      return data[0]
+      return data
     } catch (error) {
       console.log('error' + error)
       throw new Error(error)
