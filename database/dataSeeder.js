@@ -4,6 +4,7 @@ const companyController = new CompanyController();
 
 async function seedData(){
     try {
+        console.log('#+#+#+#+#+#+#+# Criando dados iniciais.')
         const companies = await companyController.list(null, null)
 
         if(companies.length > 0){
