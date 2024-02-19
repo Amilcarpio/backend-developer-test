@@ -1,4 +1,4 @@
-import { Job } from '../models/index.js'
+import { Job } from '../models/sequelizeConfig.js'
 import sequelize from 'sequelize'
 const { Op } = sequelize.Op
 
@@ -10,7 +10,6 @@ class Jobs {
           description: DAO.description,
           location: DAO.location,
           notes: DAO.notes,
-          status: DAO.status,
           companyId: DAO.companyId
         })
 
