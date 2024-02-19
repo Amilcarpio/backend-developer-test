@@ -8,6 +8,11 @@ services:
       - '3000:3000'
     volumes:
       - .:/usr/src/app
+    environment:
+      POSTGRES_HOST: postgres_srv
+      POSTGRES_DB: $POSTGRES_DB
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
     depends_on:
       - postgres_srv
     networks:
@@ -19,10 +24,6 @@ services:
       - '5433:5432'
     volumes:
       - ./postgres_data:/var/lib/postgresql/datas
-    environment:
-      POSTGRES_DB: jobs-list
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: dev123
     networks:
       - postgres_network
 
