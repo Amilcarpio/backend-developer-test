@@ -4,11 +4,11 @@ const companyController = new CompanyController();
 
 async function seedData(){
     try {
-        console.log('#+#+#+#+#+#+#+# Criando dados iniciais.')
+        console.log('#+#+#+#+#+#+#+# Creating fake data.')
         const companies = await companyController.list(null, null)
 
         if(companies.length > 0){
-            console.log('#+#+#+#+#+#+#+# Dados já criados.')
+            console.log('#+#+#+#+#+#+#+# Data already created.')
             return;
         }
 
@@ -25,7 +25,7 @@ async function seedData(){
                 name: 'ACME Enterprises'
             })
         ])
-
+        console.log('#+#+#+#+#+#+#+# Fake data created.')
     } catch (error) {
         console.log("error" + error)
         throw error
