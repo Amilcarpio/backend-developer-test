@@ -57,8 +57,7 @@ class JobController {
       }
 
       const result = await jobRepository.save(jobDAO)
-      console.log('=======Sended: ' + result)
-
+      console.log('==========Result: ' + JSON.stringify(result))
       res.status(201).send(result)
     } catch (error) {
       res.status(500).json({ status: 'error', message: error.message })

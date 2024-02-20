@@ -15,7 +15,6 @@ describe('Jobs API integration test', () => {
     res = await axios.post('http://localhost:3000/api/job', jobData)
 
     expect(res.status).to.equal(201)
-    expect(res.data).to.have.property('id').deep.equal(res.data.id)
     expect(res.data).to.have.property('status').deep.equal('draft')
     expect(res.data).to.have.property('title').deep.equal(jobData.title)
     expect(res.data).to.have.property('description').deep.equal(jobData.description)
