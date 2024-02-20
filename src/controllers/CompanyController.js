@@ -8,10 +8,16 @@ class CompanyController {
     async list(req,res){
         try {
             const companies = await companyRepository.list(null, null)
+            if(!companies){
+                console.log('=========Companies not found')
+                return res
+                    .status(400)
+                    .json({status: 'error', message: 'Sorry, the provided data is not valid. Please check and try again.'})
+            }
             res.status(200).json(companies)
         } catch (error) {
-            res.status(500).json(error)
-            console.log('error' + error)
+            res.status(500).json({status: 'error', message: error.message})
+            console.log('Error at List/company: ' + error)
         }
     }
 
@@ -19,11 +25,17 @@ class CompanyController {
         try {
             console.log('=============Recebido: ' + req.params.company_id)
             const companyId = req.params.company_id
-            const companies = await companyRepository.get(companyId)
-            res.status(200).json(companies)
+            const company = await companyRepository.get(companyId)
+            if(!company){
+                console.log('=========Company not found')
+                return res
+                    .status(400)
+                    .json({status: 'error', message: 'Sorry, the provided data is not valid. Please check and try again.'})
+            }
+            res.status(200).json(company)
         } catch (error) {
             res.status(500).json({status: 'error', message: error.message})
-            console.log('error' + error)
+            console.log('Error at Get/company: ' + error)
         }
     }
     
