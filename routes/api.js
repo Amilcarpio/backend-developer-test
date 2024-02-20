@@ -1,14 +1,9 @@
 import express from 'express';
 import JobController from '../src/controllers/JobController.js';
 import CompanyController from '../src/controllers/CompanyController.js';
-import CompanyRepository from '../src/repository/CompanyRepository.js';
-import JobRepository from '../src/repository/JobRepository.js';
 
-const companyRepository = new CompanyRepository();
-const jobRepository = new JobRepository();
-
-const jobController = new JobController(jobRepository, companyRepository);
-const companyController = new CompanyController(companyRepository);
+const jobController = new JobController();
+const companyController = new CompanyController();
 
 const router = express.Router();
 
