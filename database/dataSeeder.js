@@ -1,4 +1,4 @@
-import CompanyController from "../src/controllers/CompanyController.js";
+import CompanyController from "../src/repository/CompanyRepository.js";
 
 const companyController = new CompanyController();
 
