@@ -17,7 +17,7 @@ router.put('/job/:job_id/archive', jobController.archive)
 
 router.delete('/job/:job_id', jobController.delete)
 
-router.get('/companies', companyController.get)
+router.get('/companies', companyController.list)
 
 router.get('/companies/:company_id', companyController.get)
 
