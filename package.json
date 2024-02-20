@@ -4,8 +4,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "DEBUG=api:* node ./bin/www",
-    "dev": "DEBUG=api:* nodemon ./bin/www",
+    "start": "node ./app.js",
+    "dev": "nodemon ./app.js",
     "test": "mocha test/**/*.test.js"
   },
   "dependencies": {
