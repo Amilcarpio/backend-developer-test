@@ -1,6 +1,7 @@
 version: '3'
 services:
   api:
+    container_name: api
     build: 
       context: .
       dockerfile: Dockerfile
@@ -19,6 +20,7 @@ services:
       - postgres_network
 
   postgres_srv:
+    container_name: postgres_srv
     image: postgres:12
     ports:
       - '5433:5432'
@@ -26,6 +28,10 @@ services:
       - ./postgres_data:/var/lib/postgresql/datas
     networks:
       - postgres_network
+    environment:
+      POSTGRES_DB: $POSTGRES_DB
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
 
 networks:
   postgres_network:
