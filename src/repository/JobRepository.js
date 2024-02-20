@@ -3,45 +3,55 @@ import sequelize from 'sequelize'
 const { Op } = sequelize.Op
 
 class JobRepository {
-    async save(DAO) {
-      try {
-        const item = await Job.create({
-          title: DAO.title,
-          description: DAO.description,
-          location: DAO.location,
-          notes: DAO.notes,
-          companyId: DAO.companyId
-        })
-
-        return item
-      } catch (error) {
-        console.log('error' + error)
-        throw new Error(error)
-      }
-    }
-
-  async get (id) {
+  async save (DAO) {
     try {
-      let where = {}
-      where.jobId = id
-
-      const data = await Job.findOne({
-        attributes: ['title', 'description', 'location', 'notes', 'status'],
-        where: where,
-        limit: 1,
-        offset: 0
+      console.log('===========JobController      #save')
+      const item = await Job.create({
+        title: DAO.title,
+        description: DAO.description,
+        location: DAO.location,
+        notes: DAO.notes,
+        companyId: DAO.companyId
       })
-
-      return data[0]
+      console.log('saved: ' + JSON.stringify(item))
+      return item
     } catch (error) {
       console.log('error' + error)
       throw new Error(error)
     }
   }
 
-  async list (title, status, location, companyId) {
+  async get(id) {
     try {
+        console.log('===========JobController      #get');
+        console.log('========id: ', id);
+        let where = {};
+        where.id = id;
+
+        const data = await Job.findAll({
+            attributes: ['title', 'description', 'location', 'notes', 'status'],
+            where: where,
+            limit: 1,
+            offset: 0
+        });
+
+
+        return data[0]; 
+    } catch (error) {
+        console.log('error' + error);
+        throw new Error(error);
+    }
+}
+
+  async list (title, status, location, companyId, id) {
+    try {
+      console.log('===========JobController      #list')
+      console.log('==========Params: ', title, status, location, companyId, id)
       let where = {}
+
+      if (id) {
+        where.id = id
+      }
 
       if (title) {
         where.title = {
@@ -68,26 +78,32 @@ class JobRepository {
       const data = await Job.findAll({
         attributes: fields,
         include: [
-          { model: model.Company, as: 'company', attributes: ['id','name', 'createdAt'] }
+          {
+            model: model.Company,
+            as: 'company',
+            attributes: ['id', 'name', 'createdAt']
+          }
         ],
         where: where,
         limit: 10,
         offset: 0
-      }) 
+      })
 
-      return JSON.stringify(data)
+      return data
     } catch (error) {
-        console.log('error' + error)
-        throw new Error(error)
+      console.log('error' + error)
+      throw new Error(error)
     }
   }
 
-  async update(id, data) {
+  async update (data, id) {
     try {
+      console.log('===========JobController      #update')
+      console.log('===========id: ', id)
       let where = {}
-      where.jobId = id
+      where.id = id
       const result = await Job.update(data, {
-        where: where
+        returning: true, where: where, 
       })
       return result
     } catch (error) {
@@ -96,8 +112,10 @@ class JobRepository {
     }
   }
 
-  async publish(id) {
+  async publish (id) {
     try {
+      console.log('===========JobController      #publish')
+      console.log('===========id: ', id)
       let where = {}
       where.id = id
 
@@ -105,7 +123,7 @@ class JobRepository {
         status: 'published'
       }
       const result = await Job.update(data, {
-        where: where
+        returning: true, where: where
       })
       return result
     } catch (error) {
@@ -114,33 +132,36 @@ class JobRepository {
     }
   }
 
-  async archive(id) {
+  async archive (id) {
     try {
+      console.log('===========JobController      #archive')
+      console.log('===========id: ', id)
       let where = {}
       where.id = id
 
       const data = {
         status: 'archived'
       }
-      
+
       const result = await Job.update(data, {
-        where: where
+        returning:true, where: where
       })
 
       return result
-
     } catch (error) {
       console.log('error' + error)
       throw new Error(error)
     }
   }
 
-  async delete(id) {
+  async delete (id) {
     try {
+      console.log('===========JobController      #delete')
+      console.log('===========id: ', id)
       let where = {}
       where.id = id
       const result = Job.destroy({
-        where: where
+        returnin: true, where: where
       })
       return result
     } catch (error) {
