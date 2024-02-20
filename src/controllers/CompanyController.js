@@ -1,11 +1,13 @@
+import CompanyRepository from '../repository/CompanyRepository.js'
+
+const companyRepository = new CompanyRepository()
 class CompanyController {
-    constructor (companyRepository) {
-        this.companyRepository = companyRepository
+    constructor () {
     }
 
     async list(req,res){
         try {
-            const companies = await this.companyRepository.list(null, null)
+            const companies = await companyRepository.list(null, null)
             res.status(200).json(companies)
         } catch (error) {
             res.status(500).json(error)
@@ -15,9 +17,9 @@ class CompanyController {
 
     async get(req,res){
         try {
+            console.log('=============Recebido: ' + req.params.company_id)
             const companyId = req.params.company_id
-            console.log('=============Recebido: ' + companyId)
-            const companies = await this.companyRepository.get(companyId)
+            const companies = await companyRepository.get(companyId)
             res.status(200).json(companies)
         } catch (error) {
             res.status(500).json({status: 'error', message: error.message})

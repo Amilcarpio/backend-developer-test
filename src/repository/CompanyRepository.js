@@ -18,17 +18,18 @@ class CompanyRepository {
   async get (id) {
     try {
     console.log('===========CompanyController      #get')
+    console.log('========id: ', id)
       let where = {}
       where.id = id
 
-      const data = await Company.findOne({
-        attributes: ['name'],
+      const data = await Company.findAll({
+        attributes: ['id', 'name'],
         where: where,
         limit: 1,
         offset: 0
       })
 
-      return data
+      return data[0]
     } catch (error) {
       console.log('error' + error)
       throw new Error(error)
@@ -48,7 +49,7 @@ class CompanyRepository {
         where.jobId = jobId
       }
 
-      const fields = ['name']
+      const fields = ['id', 'name']
 
       const data = await Company.findAll({
         attributes: fields,
