@@ -1,4 +1,4 @@
-import CompanyRepository from '../repository/CompanyRepository.js'
+const CompanyRepository = require('../repository/CompanyRepository.js')
 
 const companyRepository = new CompanyRepository()
 class CompanyController {
@@ -41,4 +41,4 @@ class CompanyController {
     
 }
 
-export default CompanyController
+module.exports = CompanyController

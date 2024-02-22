@@ -1,8 +1,8 @@
-import { Model, DataTypes } from 'sequelize';
+const { Model, DataTypes } = require('sequelize');
 
 const jobStatusEnum = ['draft', 'published', 'archived', 'rejected'];
 
-export default function(sequelize) {
+module.exports = function(sequelize) {
   class Job extends Model {
     static associate(models) {
       Job.belongsTo(models.Company, {

@@ -1,31 +1,23 @@
-import express, { json, urlencoded } from 'express'
-import createError from 'http-errors'
-import cors from 'cors'
-import cookieParser from 'cookie-parser'
-import apiRouter from './routes/api.js'
-import syncDatabase from './database/syncDatabase.js'
+const express = require('express');
+const createError = require('http-errors');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const apiRouter = require('./routes/api.js');
+const syncDatabase = require('./database/syncDatabase.js');
 
-const app = express()
+const app = express();
 
-app.use(cors())
+app.use(cors());
 
-app.use(json())
+app.use(express.json());
 
-app.use(urlencoded({ extended: false, limit: '50mb' }))
-app.use(cookieParser())
+app.use(express.urlencoded({ extended: false, limit: '50mb' }));
+app.use(cookieParser());
 
-app.use('/api', apiRouter)
+app.use('/api', apiRouter);
 
 app.use(function(req, res, next) {
     next(createError(404));
-  });
-
-app.use(function(err, req, res, next) {
-res.locals.message = err.message;
-res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-res.status(err.status || 500);
-res.render('error');
 });
 
 syncDatabase().then(() => {
@@ -34,7 +26,4 @@ syncDatabase().then(() => {
     })
 }).catch((error) => {
     console.log('error'+error)
-})
-
-
-
+});

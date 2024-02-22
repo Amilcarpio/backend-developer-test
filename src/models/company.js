@@ -1,6 +1,6 @@
-import { Model, DataTypes } from 'sequelize';
+const { Model, DataTypes } = require('sequelize');
 
-export default function(sequelize) {
+module.exports = function(sequelize) {
   class Company extends Model {
     static associate(models) {
       Company.hasMany(models.Job, {
@@ -10,7 +10,7 @@ export default function(sequelize) {
     }
   }
 
-    Company.init(
+  Company.init(
     {
       name: {
         type: DataTypes.TEXT,

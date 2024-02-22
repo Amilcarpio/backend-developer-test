@@ -1,20 +1,21 @@
-import Sequelize from 'sequelize';
-import config from '../../database/config/config.js';
+const Sequelize = require('sequelize');
+const config = require('../../database/config/config.js');
 
 const sequelize = new Sequelize(config.POSTGRES_DB, config.POSTGRES_USER, config.POSTGRES_PASSWORD, {
-    host: 'postgres_srv',
-    dialect: 'postgres',
+  host: 'postgres_srv',
+  dialect: 'postgres',
+});
+
+sequelize.authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(error => {
+    console.log('Unable to connect to the database:', error);
   });
 
-try {
-  await sequelize.authenticate();
-  console.log('Connection has been established successfully.');
-} catch (error) {
-  console.log('Unable to connect to the database:', error);
-}
-
-import CompanyModel from './company.js';
-import JobModel from './job.js';
+const CompanyModel = require('./company.js');
+const JobModel = require('./job.js');
 
 const Company = CompanyModel(sequelize);
 const Job = JobModel(sequelize);
@@ -28,4 +29,4 @@ function associateModels() {
 
 associateModels();
 
-export { sequelize, Company, Job };
+module.exports = { sequelize, Company, Job };

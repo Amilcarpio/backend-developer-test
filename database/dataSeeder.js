@@ -1,4 +1,4 @@
-import CompanyController from "../src/repository/CompanyRepository.js";
+const CompanyController = require("../src/repository/CompanyRepository.js");
 
 const companyController = new CompanyController();
 
@@ -32,4 +32,4 @@ async function seedData(){
     }
 }
 
-export default seedData
+module.exports = seedData;
