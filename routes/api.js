@@ -1,7 +1,6 @@
-import express from 'express';
-import JobController from '../src/controllers/JobController.js';
-import CompanyController from '../src/controllers/CompanyController.js';
-
+const express = require('express');
+const JobController = require('../src/controllers/JobController.js');
+const CompanyController = require('../src/controllers/CompanyController.js');
 const jobController = new JobController();
 const companyController = new CompanyController();
 
@@ -21,12 +20,6 @@ router.get('/companies', companyController.list)
 
 router.get('/companies/:company_id', companyController.get)
 
-router.get('/feed', async (req,res) => {
-    try {
-        
-    } catch (error) {
-        
-    }
-})
+router.get('/feed', jobController.feed)
 
-export default router
+module.exports = router;
