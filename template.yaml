@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Uma função Lambda para atualizar a lista de jobs
+
+Resources:
+  UpdateJobsListFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: sendJobListToS3.handler
+      Runtime: nodejs20.x
+      Events:
+        Timer:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+
+  EventBridgeRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Description: Regra para acionar a função Lambda a cada 5 minutos
+      ScheduleExpression: "rate(5 minutes)"
+      State: ENABLED
+      Targets:
+        - Arn: !GetAtt UpdateJobsListFunction.Arn
+          Id: "TargetFunctionV1"
