@@ -5,15 +5,14 @@ const NodeCache = require('node-cache');
 
 const myCache = new NodeCache();
 
-AWS.config.update({
-  accesKeyId: process.env.AWS_ACCESS_KEY_ID,
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   region: process.env.AWS_REGION
 });
-const s3 = new AWS.S3();
 
 const jobRepository = new JobRepository();
-const companyRepository = new CompanyRepository();
+const companyRepository = new CompanyRepository()
 
 class JobController {
   constructor() {}
@@ -37,7 +36,7 @@ class JobController {
       }
 
       const searchDAOCompany = await companyRepository.get(jobDAO.companyId);
-      console.log('==========Current Company: ' + searchDAOCompany.id);
+      console.log('==========Current Company: ' + searchDAOCompany);
 
       if (!searchDAOCompany) {
         console.log('=============CompanyId not found');
@@ -72,7 +71,7 @@ class JobController {
       res.status(201).send(result);
     } catch (error) {
       res.status(500).json({ status: 'error', message: error.message });
-      console.log('Error at POST/job: ' + error);
+      console.log('Error at POST/job: ' + error.message);
     }
   }
 
@@ -217,7 +216,7 @@ class JobController {
       let jobsList = myCache.get('jobsList');
       if (!jobsList) {
         console.log('Fetching data from S3...');
-        const fetchBucket = await s3.getObject({ Bucket: 'jobs-feed-bucket', Key: 'jobs-list.json' }).promise();
+        const fetchBucket = await s3.getObject({ Bucket: process.env.AWS_S3_BUCKET, Key: 'jobs-list.json' }).promise();
         if (fetchBucket.Body) {
           jobsList = JSON.parse(fetchBucket.Body.toString());
           myCache.set('jobsList', jobsList, 30);

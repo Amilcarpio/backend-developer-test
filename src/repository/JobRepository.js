@@ -6,7 +6,7 @@ const { Op } = sequelize.Op;
 class JobRepository {
   async save(DAO) {
     try {
-      console.log('===========JobController      #save');
+      console.log('===========JobController      #save')
       const item = await Job.create({
         title: DAO.title,
         description: DAO.description,
@@ -84,9 +84,7 @@ class JobRepository {
             attributes: ['id', 'name', 'createdAt']
           }
         ],
-        where: where,
-        limit: 10,
-        offset: 0
+        where: where
       });
 
       return data;
