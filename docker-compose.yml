@@ -9,11 +9,17 @@ services:
       - '3000:3000'
     volumes:
       - .:/usr/src/app
+      - ~/.aws/config:/root/.aws
     environment:
       POSTGRES_HOST: postgres_srv
       POSTGRES_DB: $POSTGRES_DB
       POSTGRES_USER: $POSTGRES_USER
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+      AWS_REGION: $AWS_REGION
+      AWS_S3_BUCKET: $AWS_S3_BUCKET
+      AWS_S3_KEY: $AWS_S3_KEY
     depends_on:
       - postgres_srv
     networks:
