@@ -1,6 +1,6 @@
 # backend-developer-test
 
-Short description about what the project does.
+A project to build an API for a job searc company. This project use a serveless enverioment for the service layer, build with AWS SAM CLI. The API was builded in a RESTful architecture.
 
 ## Prerequisites
 
