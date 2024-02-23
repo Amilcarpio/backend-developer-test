@@ -1,6 +1,6 @@
 # backend-developer-test
 
-A project to build an API for a job searc company. This project use a serveless enverioment for the service layer, build with AWS SAM CLI. The API was builded in a RESTful architecture.
+A project to build an API for a job search company. This project use a serveless enverioment for the service layer, build with AWS SAM CLI. The API was builded in a RESTful architecture.
 
 ## Prerequisites
 
