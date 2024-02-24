@@ -24,7 +24,7 @@ function associateModels() {
   const models = { Company, Job };
   Object.values(models)
     .filter(model => typeof model.associate === 'function')
-    .forEach(model => model.associate(models));
+    .forEach(model => model.associate(models))
 }
 
 associateModels();
