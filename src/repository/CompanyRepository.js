@@ -37,7 +37,7 @@ class CompanyRepository {
     }
   }
 
-  async list(companyId, jobId) {
+  async list(limit, offset, companyId, jobId) {
     try {
       console.log('===========CompanyController      #list');
       let where = {};
@@ -58,8 +58,8 @@ class CompanyRepository {
           { model: Job, as: 'jobs', attributes: ['id', 'title', 'description', 'location', 'notes', 'status'] }
         ],
         where: where,
-        limit: 10,
-        offset: 0
+        limit: limit,
+        offset: offset
       });
 
       return data;
