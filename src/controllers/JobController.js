@@ -68,7 +68,7 @@ class JobController {
 
       const result = await jobRepository.save(jobDAO);
       console.log('==========Result: ' + JSON.stringify(result));
-      res.status(201).send(result);
+      res.status(201).json(result);
     } catch (error) {
       res.status(500).json({ status: 'error', message: error.message });
       console.log('Error at POST/job: ' + error.message);
@@ -131,7 +131,7 @@ class JobController {
       }
 
       const result = await jobRepository.update(jobDAO, jobId);
-      console.log('=======Sended: ' + result[1]);
+      console.log('=======Sended: ' + JSON.stringify(result[1]));
 
       res.status(200).json(result);
     } catch (error) {
