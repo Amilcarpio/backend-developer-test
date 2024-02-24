@@ -1,12 +1,12 @@
 # backend-developer-test
 
-Short description about what the project does.
+A project to build an API for a job search company. This project uses a serverless environment for the service layer, built with AWS SAM CLI. The API was built in a RESTful architecture.
 
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
 
-- You have installed the latest version of node.js and npm.
+- You have installed the latest version of Node.js and npm.
 - You have a Windows/Linux/Mac machine.
 - You have Docker and Docker Compose installed.
 - You have AWS SAM CLI installed.
@@ -32,30 +32,21 @@ AWS_S3_KEY=<your_s3_key>
 ## Running the Project
 To run the project, follow these steps:
 
-1. Build the Docker containers with docker-compose up --build.
-2. Start the containers with docker-compose up.
-3. In a separate terminal, enter the "api" container with sudo docker exec -it api /bin/bash.
-4. Run the tests with npm run test.
+1. Build the Docker containers with `docker-compose up --build`.
+2. Start the containers with `docker-compose up`.
+3. In a separate terminal, enter the "api" container with `sudo docker exec -it api /bin/bash`.
+4. Run the tests with `npm run test`.
 5. Deploying with AWS SAM
-6. To check de Swagger documentation go to "http://localhost:3000/api-docs".
-7. The pattern of AWS Bucket Key are set as "job-list.json". Please, set your own bucket to this pattern.
-8. To deploy the application on AWS with SAM, ensure you have AWS SAM CLI installed on your machine. Following these steps:
-
-8. 1. Build the application with sam build.
-8. 2. Deploy the application with sam deploy.
-
-## Contributing to
-To contribute to , follow these steps:
-
-1. Fork this repository.
-2. Create a branch: git checkout -b <branch_name>.
-3. Make your changes and commit them: git commit -m '<commit_message>'
-4. Push to the original branch: git push origin <Project Name>/<location>
-6. Create the pull request.
-7. Alternatively see the GitHub documentation on creating a pull request.
+6. To check the Swagger documentation, go to "http://localhost:3000/api-docs".
+7. The pattern of AWS Bucket Key is set as "job-list.json". Please, set your own bucket to this pattern.
+8. To deploy the application on AWS with SAM, ensure you have AWS SAM CLI installed on your machine. Follow these steps:
+   1. Build the application with `sam build`.
+   2. Deploy the application with `sam deploy`.
+9. After running the server for the first time, be sure to change the `syncDatabase` parameter to false to avoid data loss.
 
 ## Contact
 If you want to contact me, you can reach me at amilcar.pio@gmail.com.
 
 ## License
 This project uses the following license: MIT
+
