@@ -43,7 +43,7 @@ class JobRepository {
     }
   }
 
-  async list(title, status, location, companyId, id) {
+  async list(limit, offset, title, status, location, companyId, id) {
     try {
       console.log('===========JobController      #list');
       console.log('==========Params: ', title, status, location, companyId, id);
@@ -73,7 +73,7 @@ class JobRepository {
         where.companyId = companyId;
       }
 
-      const fields = ['title', 'description', 'location', 'notes', 'status'];
+      const fields = ['id','title', 'description', 'location', 'notes', 'status', 'createdAt'];
 
       const data = await Job.findAll({
         attributes: fields,
@@ -84,7 +84,9 @@ class JobRepository {
             attributes: ['id', 'name', 'createdAt']
           }
         ],
-        where: where
+        where: where,
+        limit: limit,
+        offset: offset
       });
 
       return data;

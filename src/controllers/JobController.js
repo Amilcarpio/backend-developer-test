@@ -219,7 +219,7 @@ class JobController {
         const fetchBucket = await s3.getObject({ Bucket: process.env.AWS_S3_BUCKET, Key: 'jobs-list.json' }).promise();
         if (fetchBucket.Body) {
           jobsList = JSON.parse(fetchBucket.Body.toString());
-          myCache.set('jobsList', jobsList, 30);
+          myCache.set('jobsList', jobsList, 60);
         } else {
           console.log('No data found in S3 bucket');
           res.status(404).json({ status: 'error', message: 'No data found.' });
