@@ -19,7 +19,6 @@ services:
       AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
       AWS_REGION: $AWS_REGION
       AWS_S3_BUCKET: $AWS_S3_BUCKET
-      AWS_S3_KEY: $AWS_S3_KEY
     depends_on:
       - postgres_srv
     networks:
@@ -27,14 +26,15 @@ services:
 
   postgres_srv:
     container_name: postgres_srv
-    image: postgres:12
+    image: postgres:16
     ports:
       - '5432:5432'
     volumes:
-      - ./postgres_data:/var/lib/postgresql/datas
+      - ./postgres_data:/var/lib/postgresql/data
     networks:
       - postgres_network
     environment:
+      POSTGRES_HOST: postgres_srv
       POSTGRES_DB: $POSTGRES_DB
       POSTGRES_USER: $POSTGRES_USER
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
