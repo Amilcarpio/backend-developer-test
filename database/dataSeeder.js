@@ -9,21 +9,14 @@ const s3 = new AWS.S3({
 });
 const companyController = new CompanyController();
 
-async function seedData(createNewBase = false) {
+async function seedData() {
     try {
         console.log('#+#+#+#+#+#+#+# Creating fake data.')
         const companies = await companyController.list(null, null)
 
-        if (companies.length > 0 && !createNewBase) {
+        if (companies.length > 0) {
             console.log('#+#+#+#+#+#+#+# Data already created.')
             return;
-        }
-
-        if (createNewBase) {
-            console.log('#+#+#+#+#+#+#+# Deleting previous data.')
-            for(const company of companies){
-                await companyController.delete(company.id);
-            }
         }
 
         await Promise.all([
