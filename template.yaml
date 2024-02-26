@@ -6,14 +6,28 @@ Resources:
   UpdateJobsListFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: .
-      Handler: sendJobListToS3.handler
+      CodeUri: handlers/
+      Handler: sendJobsToS3.handler
       Runtime: nodejs20.x
       Events:
         Timer:
           Type: Schedule
           Properties:
             Schedule: rate(5 minutes)
+
+  JobModerationFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: /handlers
+      Handler:  jobModeration.handler
+      Runtime: nodejs20.x
+      Events:
+        SqsEvent:
+          Type: SQS
+          Properties:
+            Queue: !GetAtt moderation_queue.Arn
+            BatchSize: 10
+
 
   EventBridgeRule:
     Type: AWS::Events::Rule
