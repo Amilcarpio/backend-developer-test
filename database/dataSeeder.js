@@ -1,12 +1,4 @@
-const AWS = require('aws-sdk');
 const CompanyController = require("../src/repository/CompanyRepository.js");
-const jobsJson = require('./jobs-list.json');
-
-const s3 = new AWS.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: process.env.AWS_REGION
-});
 const companyController = new CompanyController();
 
 async function seedData() {
@@ -32,14 +24,6 @@ async function seedData() {
                 name: 'ACME Enterprises'
             })
         ])
-
-        const fetchS3 = await s3.putObject({
-            Bucket: 'jobs-feed-bucket',
-            Key: 'jobs-list.json',
-            Body: JSON.stringify(jobsJson)
-        }).promise()
-
-        console.log('======Data saved to S3: ' + JSON.stringify(fetchS3))
 
         console.log('#+#+#+#+#+#+#+# Fake data created.')
     } catch (error) {
