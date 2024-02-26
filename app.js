@@ -48,7 +48,7 @@ app.use(function(req, res, next) {
 /**
  * Synchronizes the database and starts the server.
  * 
- * The `syncDatabase` function is called with the parameter `true`, which means that the database synchronization
+ * The `syncDatabase` function is called with the parameter `false`, which means that the database synchronization
  * will occur without forcing the recreation of tables.
  * 
  * After successful synchronization of the database, the server starts listening on port 3000.
