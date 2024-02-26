@@ -2,7 +2,7 @@ const JobRepository = require("./../repository/JobRepository.js");
 const CompanyRepository = require("./../repository/CompanyRepository.js");
 const AWS = require('aws-sdk');
 const NodeCache = require('node-cache');
-
+const { sendToSQS } = require('./../aws/sqsTrigger.js');
 const myCache = new NodeCache();
 
 const s3 = new AWS.S3({
@@ -167,8 +167,9 @@ class JobController {
           .json({ status: 'error', message: 'Sorry, the provided data is not valid. Please check and try again.' });
       }
 
-      const result = await jobRepository.publish(jobId);
-      res.status(200).json(result);
+      await sendToSQS(searchJob);
+      
+      res.status(200).json({ status: true, message: 'Job send to moderation.' });
     } catch (error) {
       res.status(500).json({ status: 'error', message: error.message });
       console.log('Error at PUT/job/published: ' + error);
@@ -210,6 +211,7 @@ class JobController {
       console.log('Error at PUT/job/archived: ' + error);
     }
   }
+  
   async feed(req, res) {
     try {
       console.log('============FeedController');
@@ -256,5 +258,6 @@ class JobController {
     }
   }
 }
+
 
 module.exports = JobController;

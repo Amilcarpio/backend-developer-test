@@ -42,7 +42,7 @@ describe('Jobs API integration test', () => {
     const result = await axios.put(`http://localhost:3000/api/job/${res.data.id}/publish`);
 
     expect(result.status).to.equal(200);
-    expect(result.data[1][0]).to.have.property('status').deep.equal('published');
+    expect(result.data).to.have.property('status').deep.equal(true);
   });
 
   it('Should archive a job', async () => {
