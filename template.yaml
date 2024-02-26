@@ -6,7 +6,7 @@ Resources:
   UpdateJobsListFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: handlers/
+      CodeUri: /handlers
       Handler: sendJobsToS3.handler
       Runtime: nodejs20.x
       Events:
